@@ -5,11 +5,12 @@ Config = Config or {}
 Config.UseTarget = GetConvar('UseTarget', 'false') == 'true'
 
 Config.Doorlock = "qb" -- qb or ox
-Config.CityDoor = "jewelery-citymain" -- edit this ID to your city jewelery store door ID
+Config.CityDoor = "jewelery-citymain" -- edit this ID to your city jewelery main store door ID
 Config.CitySec = "jewelery-citysec"
-Config.GrapeDoor = "jewelery-grapemain" -- edit this ID to your grapeseed jewelery store door ID
+Config.GrapeDoor = "jewelery-grapemain" -- edit this ID to your grapeseed jewelery main store door ID
 Config.GrapeSec = "jewelery-grapesec"
---Config.PalDoor = "jewelery-citymain" -- edit this ID to your paleto jewelery store door ID
+Config.PalDoor = "jewelery-palmain" -- edit this ID to your paleto jewelery store main door ID
+Config.PalSec = "jewelery-palsec" -- 
 
 Config.ShowBlips = "true" -- blips for stores
 
@@ -19,10 +20,9 @@ Config.RequiredCops = 0
 
 Config.DoorItem = 'thermite' -- item to remove\check for when placing a charge
 Config.ThermiteSettings = {
-    correctBlocks = 1, -- correctBlocks = Number of correct blocks the player needs to click
-    incorrectBlocks = 4, -- incorrectBlocks = number of incorrect blocks after which the game will fail
-    timetoShow = 4.5, -- timetoShow = time in secs for which the right blocks will be shown
-    timetoLose = 12 -- timetoLose = maximum time after timetoshow expires for player to select the right blocks
+    time = 60, -- time the hack displays for \\ half being showing the puzzle and the other solving
+    gridsize = 5, -- (5, 6, 7, 8, 9, 10) size of grid by square units, ie. gridsize = 5 is a 5 * 5 (25) square grid
+    incorrectBlocks = 10 -- incorrectBlocks = number of incorrect blocks after which the game will fail
 }
 
 Config.JewelleryLocation = {
@@ -32,9 +32,9 @@ Config.JewelleryLocation = {
     ["grapevangelico"] = {
         ["coords"] = vector3(1649.78, 4882.32, 42.16)
     },
-    --[[["palvangelico"] = {
-        ["coords"] = vector3(-630.5, -237.13, 38.08)
-    },]]
+    ["palvangelico"] = {
+        ["coords"] = vector3(-378.45, 6047.68, 32.69)
+    },
 }
 
 Config.Jewelery = {
@@ -44,9 +44,12 @@ Config.Jewelery = {
     ["grape"] = { -- Grapeseed Vangelico's \\ Side Alley Thermite
         {coords = vector4(1645.07, 4867.87, 42.03, 16.33), anim = vector4(1645.07, 4867.87, 42.03, 16.33), effect = vector(1645.07, 4867.87, 41.84), isOpen = false},
     },
-    --[[["pal"] = { -- Paleto Vangelico's \\ Rear of Building Thermite
-        {coords = vector4(-596.02, -283.7, 50.4, 304.5), anim = vector4(-596.02, -283.7, 50.4, 304.5), effect = vector3(-596.02, -283.7, 50.19), isOpen = false},
-    },]]
+    ["pal"] = { -- Paleto Vangelico's \\ Rear of Building Thermite
+        {coords = vector4(-368.35, 6055.36, 31.5, 136.27), anim = vector4(-368.35, 6055.36, 31.5, 136.27), effect = vector3(-368.35, 6055.36, 31.31), isOpen = false},
+    },
+    ["pc"] = { -- City Vangelico's \\ PC Hack 
+    {coords = vector4(-631.33, -230.2, 38.06, 213.85), anim = vector4(-631.33, -230.2, 38.06, 213.85), effect = vector3(-631.33, -230.2, 37.56), isOpen = false},
+    },
 }
 
 Config.WhitelistedWeapons = {
@@ -250,6 +253,46 @@ Config.Locations = {
     },
     [28] = {
         ["coords"] = vector3(1646.92, 4879.76, 41.66),
+        ["isOpened"] = false,
+        ["isBusy"] = false,
+    },
+    [29] = {
+        ["coords"] = vector3(-378.25, 6042.66, 31.51),
+        ["isOpened"] = false,
+        ["isBusy"] = false,
+    },
+    [30] = {
+        ["coords"] = vector3(-377.36, 6043.55, 31.51),
+        ["isOpened"] = false,
+        ["isBusy"] = false,
+    },
+    [31] = {
+        ["coords"] = vector3(-376.51, 6046.51, 31.51),
+        ["isOpened"] = false,
+        ["isBusy"] = false,
+    },
+    [32] = {
+        ["coords"] = vector3(-378.04, 6046.66, 31.51),
+        ["isOpened"] = false,
+        ["isBusy"] = false,
+    },
+    [33] = {
+        ["coords"] = vector3(-378.93, 6045.81, 31.51),
+        ["isOpened"] = false,
+        ["isBusy"] = false,
+    },
+    [34] = {
+        ["coords"] = vector3(-380.25, 6047.12, 31.51),
+        ["isOpened"] = false,
+        ["isBusy"] = false,
+    },
+    [35] = {
+        ["coords"] = vector3(-379.34, 6048.01, 31.51),
+        ["isOpened"] = false,
+        ["isBusy"] = false,
+    },
+    [36] = {
+        ["coords"] = vector3(-379.55, 6049.53, 31.51),
         ["isOpened"] = false,
         ["isBusy"] = false,
     }
