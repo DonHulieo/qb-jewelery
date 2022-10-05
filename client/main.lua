@@ -21,6 +21,24 @@ local function loadAnimDict(dict)
     end
 end
 
+local function createBlips()
+    if pedSpawned then return end
+
+    for dealer in pairs(Config.JewelleryLocation) do
+        if Config.ShowBlips then
+            local Dealer = AddBlipForCoord(Config.JewelleryLocation[dealer]["coords"]["x"], Config.JewelleryLocation[dealer]["coords"]["y"], Config.JewelleryLocation[dealer]["coords"]["z"])
+            SetBlipSprite (Dealer, 617)
+            SetBlipDisplay(Dealer, 4)
+            SetBlipScale  (Dealer, 0.4)
+            SetBlipAsShortRange(Dealer, true)
+            SetBlipColour(Dealer, 3)
+            BeginTextCommandSetBlipName("STRING")
+            AddTextComponentSubstringPlayerName("Vangelico Jewellery")
+            EndTextCommandSetBlipName(Dealer)
+        end
+    end
+end
+
 local function validWeapon()
     local ped = PlayerPedId()
     local pedWeapon = GetSelectedPedWeapon(ped)
@@ -56,52 +74,58 @@ local function smashVitrine(k)
     -- end
 
     QBCore.Functions.TriggerCallback('qb-jewellery:server:getCops', function(cops)
-        if cops >= Config.RequiredCops then
-            local animDict = "missheist_jewel"
-            local animName = "smash_case"
-            local ped = PlayerPedId()
-            local plyCoords = GetOffsetFromEntityInWorldCoords(ped, 0, 0.6, 0)
-            local pedWeapon = GetSelectedPedWeapon(ped)
-            if math.random(1, 100) <= 80 and not IsWearingHandshoes() then
-                TriggerServerEvent("evidence:server:CreateFingerDrop", plyCoords)
-            elseif math.random(1, 100) <= 5 and IsWearingHandshoes() then
-                TriggerServerEvent("evidence:server:CreateFingerDrop", plyCoords)
-                QBCore.Functions.Notify(Lang:t('error.fingerprints'), "error")
-            end
-            smashing = true
-            QBCore.Functions.Progressbar("smash_vitrine", Lang:t('info.progressbar'), Config.WhitelistedWeapons[pedWeapon]["timeOut"], false, true, {
-                disableMovement = true,
-                disableCarMovement = true,
-                disableMouse = false,
-                disableCombat = true,
-            }, {}, {}, {}, function() -- Done
-                TriggerServerEvent('qb-jewellery:server:setVitrineState', "isOpened", true, k)
-                TriggerServerEvent('qb-jewellery:server:setVitrineState', "isBusy", false, k)
-                TriggerServerEvent('qb-jewellery:server:vitrineReward')
-                TriggerServerEvent('qb-jewellery:server:setTimeout')
-                TriggerServerEvent('police:server:policeAlert', 'Robbery in progress')
-                smashing = false
-                TaskPlayAnim(ped, animDict, "exit", 3.0, 3.0, -1, 2, 0, 0, 0, 0)
-            end, function() -- Cancel
-                TriggerServerEvent('qb-jewellery:server:setVitrineState', "isBusy", false, k)
-                smashing = false
-                TaskPlayAnim(ped, animDict, "exit", 3.0, 3.0, -1, 2, 0, 0, 0, 0)
-            end)
-            TriggerServerEvent('qb-jewellery:server:setVitrineState', "isBusy", true, k)
-
-            CreateThread(function()
-                while smashing do
-                    loadAnimDict(animDict)
-                    TaskPlayAnim(ped, animDict, animName, 3.0, 3.0, -1, 2, 0, 0, 0, 0 )
-                    Wait(500)
-                    TriggerServerEvent("InteractSound_SV:PlayOnSource", "breaking_vitrine_glass", 0.25)
-                    loadParticle()
-                    StartParticleFxLoopedAtCoord("scr_jewel_cab_smash", plyCoords.x, plyCoords.y, plyCoords.z, 0.0, 0.0, 0.0, 1.0, false, false, false, false)
-                    Wait(2500)
+        if GetClockHours() <= 6 or GetClockHours() >= 18 then
+            if cops >= Config.RequiredCops then
+                local animDict = "missheist_jewel"
+                local animName = "smash_case"
+                local ped = PlayerPedId()
+                local plyCoords = GetOffsetFromEntityInWorldCoords(ped, 0, 0.6, 0)
+                local pedWeapon = GetSelectedPedWeapon(ped)
+                if math.random(1, 100) <= 80 and not IsWearingHandshoes() then
+                    TriggerServerEvent("evidence:server:CreateFingerDrop", plyCoords)
+                elseif math.random(1, 100) <= 5 and IsWearingHandshoes() then
+                    TriggerServerEvent("evidence:server:CreateFingerDrop", plyCoords)
+                    exports['okokNotify']:Alert("FUCK!", Lang:t('error.fingerprints'), 3500, 'criminal')
+                    -- QBCore.Functions.Notify(Lang:t('error.fingerprints'), "error")
                 end
-            end)
-        else
-            QBCore.Functions.Notify(Lang:t('error.minimum_police', {value = Config.RequiredCops}), 'error')
+                smashing = true
+                QBCore.Functions.Progressbar("smash_vitrine", Lang:t('info.progressbar'), Config.WhitelistedWeapons[pedWeapon]["timeOut"], false, true, {
+                    disableMovement = true,
+                    disableCarMovement = true,
+                    disableMouse = false,
+                    disableCombat = true,
+                }, {}, {}, {}, function() -- Done
+                    TriggerServerEvent('qb-jewellery:server:setVitrineState', "isOpened", true, k)
+                    TriggerServerEvent('qb-jewellery:server:setVitrineState', "isBusy", false, k)
+                    TriggerServerEvent('qb-jewellery:server:vitrineReward')
+                    TriggerServerEvent('qb-jewellery:server:setTimeout')
+                    TriggerServerEvent('police:server:policeAlert', 'Robbery in progress')
+                    smashing = false
+                    TaskPlayAnim(ped, animDict, "exit", 3.0, 3.0, -1, 2, 0, 0, 0, 0)
+                end, function() -- Cancel
+                    TriggerServerEvent('qb-jewellery:server:setVitrineState', "isBusy", false, k)
+                    smashing = false
+                    TaskPlayAnim(ped, animDict, "exit", 3.0, 3.0, -1, 2, 0, 0, 0, 0)
+                end)
+                TriggerServerEvent('qb-jewellery:server:setVitrineState', "isBusy", true, k)
+
+                CreateThread(function()
+                    while smashing do
+                        loadAnimDict(animDict)
+                        TaskPlayAnim(ped, animDict, animName, 3.0, 3.0, -1, 2, 0, 0, 0, 0 )
+                        Wait(500)
+                        TriggerServerEvent("InteractSound_SV:PlayOnSource", "breaking_vitrine_glass", 0.25)
+                        loadParticle()
+                        StartParticleFxLoopedAtCoord("scr_jewel_cab_smash", plyCoords.x, plyCoords.y, plyCoords.z, 0.0, 0.0, 0.0, 1.0, false, false, false, false)
+                        Wait(2500)
+                    end
+                end)
+            else
+                exports['okokNotify']:Alert("Oh C'mon!", Lang:t('error.minimum_police'), 5000, 'criminal')
+                -- QBCore.Functions.Notify(Lang:t('error.minimum_police', {value = Config.RequiredCops}), 'error')
+            end
+        elseif GetClockHours() >= 6 and GetClockHours() <= 18 then
+            exports['okokNotify']:Alert("Oh Shit..", "I should come back and try this at night...", 5000, 'criminal')
         end
     end)
 end
@@ -112,19 +136,31 @@ RegisterNetEvent('qb-jewellery:client:setVitrineState', function(stateType, stat
     Config.Locations[k][stateType] = state
 end)
 
+RegisterNetEvent('QBCore:Client:OnPlayerLoaded', function()
+    PlayerData = QBCore.Functions.GetPlayerData()
+    createBlips()
+end)
+
+AddEventHandler('onResourceStart', function(resourceName)
+    if GetCurrentResourceName() ~= resourceName then return end
+
+    createBlips()
+
+end)
+
 -- Threads
 
-CreateThread(function()
+--[[CreateThread(function()
     local Dealer = AddBlipForCoord(Config.JewelleryLocation["coords"]["x"], Config.JewelleryLocation["coords"]["y"], Config.JewelleryLocation["coords"]["z"])
     SetBlipSprite (Dealer, 617)
     SetBlipDisplay(Dealer, 4)
-    SetBlipScale  (Dealer, 0.7)
+    SetBlipScale  (Dealer, 0.4)
     SetBlipAsShortRange(Dealer, true)
     SetBlipColour(Dealer, 3)
     BeginTextCommandSetBlipName("STRING")
-    AddTextComponentSubstringPlayerName("Vangelico Jewelry")
+    AddTextComponentSubstringPlayerName("Vangelico Jewelers")
     EndTextCommandSetBlipName(Dealer)
-end)
+end)]]
 
 local listen = false
 local function Listen4Control(case)
@@ -138,7 +174,8 @@ local function Listen4Control(case)
                         if validWeapon() then
                             smashVitrine(case)
                         else
-                            QBCore.Functions.Notify(Lang:t('error.wrong_weapon'), 'error')
+                            exports['okokNotify']:Alert("Oh C'mon!", Lang:t('error.wrong_weapon'), 5000, 'error')
+                            -- QBCore.Functions.Notify(Lang:t('error.wrong_weapon'), 'error')
                         end
                     else
                         exports['qb-core']:DrawText(Lang:t('general.drawtextui_broken'), 'left')
