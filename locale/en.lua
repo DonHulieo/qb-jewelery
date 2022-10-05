@@ -1,8 +1,8 @@
 local Translations = {
     error = {
-        fingerprints = 'You\'ve left a fingerprint on the glass',
-        minimum_police = 'Minimum of %{value} police needed',
-        wrong_weapon = 'Your weapon is not strong enough..',
+        fingerprints = 'Looks like I left a fingerprint on the glass..',
+        minimum_police = 'I should try again when there\'s more police around..',
+        wrong_weapon = 'This weapon isn\'t big enough..',
         to_much = 'You have to much in your pocket'
     },
     success = {},
