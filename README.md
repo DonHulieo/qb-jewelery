@@ -32,5 +32,5 @@ All store locations are in the config, change these to your own MLO's or use Gig
 - FjamZoo for the thermite animations
 - QBCore Framework and Developers for original qb-jewelery
 
-## Discord
-- [Join Discord](https://discord.gg/tVA58nbBuk)
+## Support
+I'll happily provide any help I can, preferably join my discord and ask for support. If enough people show interest, I'll create a dedicated support channel with tickets. - [Discord](https://discord.gg/tVA58nbBuk) 
