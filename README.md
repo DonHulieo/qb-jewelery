@@ -13,6 +13,7 @@ Jewelery Store robbery script for QBCore
 ## Dependencies
 - [qb-core](https://github.com/qbcore-framework/qb-core)
 - [memorygame](https://github.com/pushkart2/memorygame)
+- [okokNotify](https://okok.tebex.io/package/4724993) 
 
 ## Features
 - 3 New Locations // City, Grapeseed & Paleto
