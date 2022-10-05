@@ -33,4 +33,5 @@ All store locations are in the config, change these to your own MLO's or use Gig
 - QBCore Framework and Developers for original qb-jewelery
 
 ## Support
-I'll happily provide any help I can, preferably join my discord and ask for support. If enough people show interest, I'll create a dedicated support channel with tickets. - [Discord](https://discord.gg/tVA58nbBuk) 
+I'll happily provide any help I can, preferably join my discord and ask for support. If enough people show interest, I'll create a dedicated support channel with tickets. 
+- [Discord](https://discord.gg/tVA58nbBuk) 
