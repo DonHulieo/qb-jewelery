@@ -25,6 +25,12 @@ Config.ThermiteSettings = {
     incorrectBlocks = 10 -- incorrectBlocks = number of incorrect blocks after which the game will fail
 }
 
+Config.VarHackSettings = {
+    blocks = 2, -- time the hack displays for \\ half being showing the puzzle and the other solving
+    time = 20 -- time the hack displays for
+}
+
+
 Config.JewelleryLocation = {
     ["cityvangelico"] = {
         ["coords"] = vector3(-630.5, -237.13, 38.08)
@@ -48,7 +54,7 @@ Config.Jewelery = {
         {coords = vector4(-368.35, 6055.36, 31.5, 136.27), anim = vector4(-368.35, 6055.36, 31.5, 136.27), effect = vector3(-368.35, 6055.36, 31.31), isOpen = false},
     },
     ["pc"] = { -- City Vangelico's \\ PC Hack 
-    {coords = vector4(-631.33, -230.2, 38.06, 213.85), anim = vector4(-631.33, -230.2, 38.06, 213.85), effect = vector3(-631.33, -230.2, 37.56), isOpen = false},
+        {coords = vector4(-631.03, -229.55, 39.23, 175.41), anim = vector4(-631.03, -229.55, 39.23, 180.18), effect = vector3(-631.06, -230.61, 39.23), isOpen = false},
     },
 }
 
