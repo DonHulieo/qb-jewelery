@@ -9,13 +9,14 @@ local PalLocked = false
 ----------------------- FUNCTIONS -----------------------
 
 local function LockCity() -- Locks Los Santos Vangelico's
-    if not StoreHit then
-        TriggerEvent('qb-doorlock:client:setState', source, Config.CityDoor, true, src, false, false)
-        TriggerEvent('qb-doorlock:client:setState', source, Config.CitySec, true, src, false, false)
-    else
-        print('City Jewelers Locked')
+    TriggerEvent('qb-doorlock:client:setState', source, Config.CityDoor, true, src, false, false)
+    TriggerEvent('qb-doorlock:client:setState', source, Config.CitySec, true, src, false, false)
+    if StoreHit == 'city' or StoreHit == 'all' then
         TriggerServerEvent('qb-doorlock:server:updateState', Config.CityDoor, true, false, false, true)
-        TriggerServerEvent('qb-doorlock:server:updateState', Config.CitySec, true, false, false, true)
+        if StoreHit == 'all' then
+            TriggerServerEvent('qb-doorlock:server:updateState', Config.CitySec, true, false, false, true)
+        end
+        print('City Jewelers Locked')
     end
     CityLocked = true
 end
@@ -29,18 +30,19 @@ local function UnlockCity() -- Unlocks Los Santos Vangelico's
             TriggerServerEvent('qb-doorlock:server:updateState', Config.CityDoor, false, false, false, true)
             TriggerEvent('qb-doorlock:client:setState', source, Config.CitySec, false, src, false, false)
         end
-        CityLocked = false
     end
+    CityLocked = false
 end
 
 local function LockGrape() -- Locks Grapeseed Vangelico's
-    if not StoreHit then
-        TriggerEvent('qb-doorlock:client:setState', source, Config.GrapeDoor, true, src, false, false)
-        TriggerEvent('qb-doorlock:client:setState', source, Config.GrapeSec, true, src, false, false)
-    else
-        print('Grapeseed Jewelers Locked')
+    TriggerEvent('qb-doorlock:client:setState', source, Config.GrapeDoor, true, src, false, false)
+    TriggerEvent('qb-doorlock:client:setState', source, Config.GrapeSec, true, src, false, false)
+    if StoreHit == 'grape' or StoreHit == 'all' then
         TriggerServerEvent('qb-doorlock:server:updateState', Config.GrapeDoor, true, false, false, true)
-        TriggerServerEvent('qb-doorlock:server:updateState', Config.GrapeSec, true, false, false, true)
+        if StoreHit == 'all' then
+            TriggerServerEvent('qb-doorlock:server:updateState', Config.GrapeSec, true, false, false, true)
+        end
+        print('Grapeseed Jewelers Locked')
     end
     GrapeLocked = true
 end
@@ -54,18 +56,19 @@ local function UnlockGrape() -- Unlocks Grapeseed Vangelico's
             TriggerServerEvent('qb-doorlock:server:updateState', Config.GrapeDoor, false, false, false, true)
             TriggerEvent('qb-doorlock:client:setState', source, Config.GrapeSec, false, src, false, false)
         end
-        GrapeLocked = false
     end
+    GrapeLocked = false
 end
 
 local function LockPal() -- Locks Paleto Vangelico's
-    if not StoreHit then
-        TriggerEvent('qb-doorlock:client:setState', source, Config.PalDoor, true, src, false, false)
-        TriggerEvent('qb-doorlock:client:setState', source, Config.PalSec, true, src, false, false)
-    else
-        print('Paleto Jewelers Locked')
+    TriggerEvent('qb-doorlock:client:setState', source, Config.PalDoor, true, src, false, false)
+    TriggerEvent('qb-doorlock:client:setState', source, Config.PalSec, true, src, false, false)
+    if StoreHit == 'pal' or StoreHit == 'all' then
         TriggerServerEvent('qb-doorlock:server:updateState', Config.PalDoor, true, false, false, true)
-        TriggerServerEvent('qb-doorlock:server:updateState', Config.PalSec, true, false, false, true)
+        if StoreHit == 'all' then
+            TriggerServerEvent('qb-doorlock:server:updateState', Config.PalSec, true, false, false, true)
+        end
+        print('Paleto Jewelers Locked')
     end
     PalLocked = true
 end
@@ -79,8 +82,8 @@ local function UnlockPal() -- Unlocks Paleto Vangelico's
             TriggerServerEvent('qb-doorlock:server:updateState', Config.PalSec, false, false, false, true)
             TriggerEvent('qb-doorlock:client:setState', source, Config.PalSec, false, src, false, false)
         end
-        PalLocked = false
     end
+    PalLocked = false
 end
 
 local function LockAll() -- Locks all stores and returns variable to stop the day/night thread below
@@ -137,36 +140,39 @@ RegisterNetEvent('qb-jewelery:client:ElectricBox', function()
     if Config.Doorlock == "ox" then
         exports['okokNotify']:Alert("That's It!", "The doors hacked, it should be opening soon..", 5000, 'criminal')
         TriggerServerEvent('qb-jewelery:client:Door')
-    elseif Config.Doorlock == "qb" then
-        exports['okokNotify']:Alert("That's It!", "The doors hacked, it should be opening soon..", 5000, 'criminal') 
+    elseif Config.Doorlock == "qb" then 
         if StoreHit == "city" then
+            exports['okokNotify']:Alert("That's It!", "The fuses are blown, the doors should open soon..", 5000, 'criminal')
             UnlockCity()
             Wait(Config.Cooldown)
-            StoreHit = nil
             if GetClockHours() >= 18 or GetClockHours() <= 6 then
                 LockCity()
             end
+            StoreHit = nil
         elseif StoreHit == "grape" then
+            exports['okokNotify']:Alert("That's It!", "The fuses are blown, the doors should open soon..", 5000, 'criminal')
             UnlockGrape()
             Wait(Config.Cooldown)
-            StoreHit = nil
             if GetClockHours() >= 18 or GetClockHours() <= 6 then
                 LockGrape()
             end
+            StoreHit = nil
         elseif StoreHit == "pal" then
+            exports['okokNotify']:Alert("That's It!", "The fuses are blown, the doors should open soon..", 5000, 'criminal')
             UnlockPal()
             Wait(Config.Cooldown)
-            StoreHit = nil
             if GetClockHours() >= 18 or GetClockHours() <= 6 then
                 LockPal()
             end
+            StoreHit = nil
         elseif StoreHit == "all" then
+            exports['okokNotify']:Alert("Well Well Well", "Looks like that unlocked all the Vangelico dorrs across the city..", 5000, 'criminal')
             UnlockAll()
             Wait(Config.Cooldown)
-            StoreHit = nil
             if GetClockHours() >= 18 or GetClockHours() <= 6 then
                 LockAll()
             end
+            StoreHit = nil
         end
     end
 
@@ -471,67 +477,67 @@ RegisterNetEvent('qb-jewelery:client:pchack', function()
                     if Dist <= 1.5 then
                         QBCore.Functions.TriggerCallback('qb-jewelery:server:GetItemsNeeded', function(hasItem)
                             if hasItem then
+                                exports['okokNotify']:Alert("What's This?", "I wonder what I'll find on here..?", 3500, 'criminal')
+                                local loc = Config.Jewelery['pc'][k]['anim']
+                                local animDict = "anim@heists@ornate_bank@hack"
+                                RequestAnimDict(animDict)
+                                RequestModel("hei_prop_hst_laptop")
+                                RequestModel("hei_p_m_bag_var22_arm_s")
+                                while not HasAnimDictLoaded(animDict) or not HasModelLoaded("hei_prop_hst_laptop") or not HasModelLoaded("hei_p_m_bag_var22_arm_s") do Wait(10) end
+                                local targetPosition, targetRotation = (vec3(GetEntityCoords(ped))), vec3(GetEntityRotation(ped))
                                 if math.random(1, 100) <= 80 and not IsWearingHandshoes() then
-                                    TriggerServerEvent("evidence:server:CreateFingerDrop", coords)
+                                    TriggerServerEvent("evidence:server:CreateFingerDrop", targetPosition)
                                 elseif math.random(1, 100) <= 5 and IsWearingHandshoes() then
-                                    TriggerServerEvent("evidence:server:CreateFingerDrop", coords)
+                                    TriggerServerEvent("evidence:server:CreateFingerDrop", targetPosition)
                                     exports['okokNotify']:Alert("FUCK!", Lang:t('error.fingerprints'), 3500, 'criminal')
-                                    -- QBCore.Functions.Notify(Lang:t('error.fingerprints'), "error")
                                 end
-                                SetEntityHeading(ped, Config.Jewelery['pc'][k]['coords'].w)
-                                exports['ps-ui']:Thermite(function(success)
+                                SetEntityHeading(ped, loc.h)
+                                local animPos = GetAnimInitialOffsetPosition(animDict, "hack_enter", loc.x, loc.y, loc.z, loc.x, loc.y, loc.z, 0, 2)
+                                local animPos2 = GetAnimInitialOffsetPosition(animDict, "hack_loop", loc.x, loc.y, loc.z, loc.x, loc.y, loc.z, 0, 2)
+                                local animPos3 = GetAnimInitialOffsetPosition(animDict, "hack_exit", loc.x, loc.y, loc.z, loc.x, loc.y, loc.z, 0, 2)
+                                FreezeEntityPosition(ped, true)
+                                local netScene = NetworkCreateSynchronisedScene(animPos, targetRotation, 2, false, false, 1065353216, 0, 1.3)
+                                local bag = CreateObject(`hei_p_m_bag_var22_arm_s`, targetPosition, 1, 1, 0)
+                                local laptop = CreateObject(`hei_prop_hst_laptop`, targetPosition, 1, 1, 0)
+                                NetworkAddPedToSynchronisedScene(ped, netScene, animDict, "hack_enter", 1.5, -4.0, 1, 16, 1148846080, 0)
+                                NetworkAddEntityToSynchronisedScene(bag, netScene, animDict, "hack_enter_bag", 4.0, -8.0, 1)
+                                NetworkAddEntityToSynchronisedScene(laptop, netScene, animDict, "hack_enter_laptop", 4.0, -8.0, 1)
+                                local netScene2 = NetworkCreateSynchronisedScene(animPos2, targetRotation, 2, false, true, 1065353216, 0, 1.3)
+                                NetworkAddPedToSynchronisedScene(ped, netScene2, animDict, "hack_loop", 1.5, -4.0, 1, 16, 1148846080, 0)
+                                NetworkAddEntityToSynchronisedScene(bag, netScene2, animDict, "hack_loop_bag", 4.0, -8.0, 1)
+                                NetworkAddEntityToSynchronisedScene(laptop, netScene2, animDict, "hack_loop_laptop", 4.0, -8.0, 1)
+                                local netScene3 = NetworkCreateSynchronisedScene(animPos3, targetRotation, 2, false, false, 1065353216, 0, 1.3)
+                                NetworkAddPedToSynchronisedScene(ped, netScene3, animDict, "hack_exit", 1.5, -4.0, 1, 16, 1148846080, 0)
+                                NetworkAddEntityToSynchronisedScene(bag, netScene3, animDict, "hack_exit_bag", 4.0, -8.0, 1)
+                                NetworkAddEntityToSynchronisedScene(laptop, netScene3, animDict, "hack_exit_laptop", 4.0, -8.0, 1)
+                                Wait(200)
+                                NetworkStartSynchronisedScene(netScene)
+                                Wait(6300)
+                                NetworkStartSynchronisedScene(netScene2)
+                                Wait(2000)
+                                exports['ps-ui']:VarHack(function(success)
                                     if success then
-                                        exports['okokNotify']:Alert("Just Put This Here..", "Should I be wearing protection?", 3500, 'criminal')
-                                        -- QBCore.Functions.Notify("Placing Charge...", 'success', 4500)
-                                        local loc = Config.Jewelery['pc'][k]['anim']
-                                        local rotx, roty, rotz = table.unpack(vec3(GetEntityRotation(ped)))
-                                        local bagscene = NetworkCreateSynchronisedScene(loc.x, loc.y, loc.z, rotx, roty, rotz, 2, false, false, 1065353216, 0, 1.3)
-                                        local bag = CreateObject(GetHashKey('hei_p_m_bag_var22_arm_s'), loc.x, loc.y, loc.z,  true,  true, false)
-                                        SetEntityCollision(bag, false, true)
-                                        NetworkAddPedToSynchronisedScene(ped, bagscene, 'anim@heists@ornate_bank@thermal_charge', 'thermal_charge', 1.5, -4.0, 1, 16, 1148846080, 0)
-                                        NetworkAddEntityToSynchronisedScene(bag, bagscene, 'anim@heists@ornate_bank@thermal_charge', 'bag_thermal_charge', 4.0, -8.0, 1)
-                                        NetworkStartSynchronisedScene(bagscene)
-                                        Wait(1500)
-                                        local x, y, z = table.unpack(GetEntityCoords(ped))
-                                        local thermal_charge = CreateObject(GetHashKey('hei_prop_heist_thermite'), x, y, z + 0.2,  true,  true, true)
-                                    
-                                        SetEntityCollision(thermal_charge, false, true)
-                                        AttachEntityToEntity(thermal_charge, ped, GetPedBoneIndex(ped, 28422), 0, 0, 0, 0, 0, 200.0, true, true, false, true, 1, true)
-                                        Wait(4000)
-
-                                        -- TriggerServerEvent('qb-jewelery:server:RemoveDoorItem')
-                                    
-                                        DetachEntity(thermal_charge, 1, 1)
-                                        FreezeEntityPosition(thermal_charge, true)
-                                        Wait(100)
+                                        NetworkStartSynchronisedScene(netScene3)
+                                        Wait(4600)
+                                        NetworkStopSynchronisedScene(netScene3)
                                         DeleteObject(bag)
-                                        ClearPedTasks(ped)
-                                    
-                                        Wait(100)
-                                        RequestNamedPtfxAsset('scr_ornate_heist')
-                                        while not HasNamedPtfxAssetLoaded('scr_ornate_heist') do
-                                            Wait(1)
-                                        end
-                                        -- ptfx = vector3(Config.Jewelery['pal'][k]['effect'].x, Config.Jewelery['pal'][k]['effect'].y, Config.Jewelery['pal'][k]['effect'].z)
-                                        local termcoords = GetEntityCoords(thermal_charge)
-                                        ptfx = vector3(termcoords.x, termcoords.y + 1.0, termcoords.z)
-
-                                        SetPtfxAssetNextCall('scr_ornate_heist')
-                                        local effect = StartParticleFxLoopedAtCoord('scr_heist_ornate_thermal_burn', ptfx, 0, 0, 0, 0x3F800000, 0, 0, 0, 0)
-                                        Wait(3000)
-                                        StopParticleFxLooped(effect, 0)
+                                        DeleteObject(laptop)
+                                        FreezeEntityPosition(ped, false)
                                         StoreHit = "all"
-                                        DeleteObject(thermal_charge)
                                         TriggerEvent('qb-jewelery:client:ElectricBox')
                                     else
                                         exports['okokNotify']:Alert("Oh Shit!", "I'll have to try that again..", 4500, 'error')
-                                        -- QBCore.Functions.Notify("You Failure!", 'error', 4500)
+                                        NetworkStartSynchronisedScene(netScene3)
+                                        Wait(4600)
+                                        NetworkStopSynchronisedScene(netScene3)
+                                        DeleteObject(bag)
+                                        DeleteObject(laptop)
+                                        FreezeEntityPosition(ped, false)
                                         StoreHit = nil
                                     end
-                                end, Config.ThermiteSettings.time, Config.ThermiteSettings.gridsize, Config.ThermiteSettings.incorrectBlocks)
+                                end, Config.VarHackSettings.blocks, Config.VarHackSettings.time)
                             else
                                 exports['okokNotify']:Alert("Oh Damn..", "I should come back and try something else..", 5000, 'criminal')
-                                -- QBCore.Functions.Notify("You don't have the correct items!", 'error')
                             end
                         end, "phone")
                     else
@@ -540,7 +546,6 @@ RegisterNetEvent('qb-jewelery:client:pchack', function()
                 end
             else
                 exports['okokNotify']:Alert("Hmmm..", "Something doesn't seem to right..", 5000, 'criminal')
-                -- QBCore.Functions.Notify("Something doesn't seem to be right..", 'error', 5000)
             end
         else
             exports['okokNotify']:Alert("Oh Shit..", "I should come back and try this at night...", 5000, 'criminal')
@@ -560,12 +565,11 @@ CreateThread(function()
                     Wait(1000)
                     LockAll()
                     loopDone = false
-                    print('Vangellico Jewelers Locked')
                 end
             else
                 Wait(5000)
             end
-        else
+        elseif GetClockHours() >= 6 and GetClockHours() <= 18 then
             if not loopDone then
                 Wait(1000)
                 UnlockAll()
@@ -590,7 +594,7 @@ CreateThread(function()
             type = "client",
             event = "qb-jewelery:client:pchack",
             icon = 'fas fa-bug',
-            label = 'Blow Fuse Box',
+            label = 'Hack Security System',
             item = 'phone',
             }
         },
