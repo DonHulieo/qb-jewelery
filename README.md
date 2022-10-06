@@ -1,10 +1,15 @@
-# don-jewelery
-Jewelery Store robbery script for QBCore
+# qb-jewelery
+Don's Jewelery Store robbery script for QBCore
+
+## Credits
+- Holiday95 for the original fork
+- FjamZoo for the thermite animations
+- QBCore Framework and Developers for original qb-jewelery
 
 ## Dependencies
 - [qb-core](https://github.com/qbcore-framework/qb-core)
-- [memorygame](https://github.com/pushkart2/memorygame)
-- [okokNotify](https://okok.tebex.io/package/4724993) 
+- [ps-ui](https://github.com/Project-Sloth/ps-ui)
+- [okokNotify](https://okok.tebex.io/package/4724993)
 
 ## Features
 - 3 New Locations // City, Grapeseed & Paleto
@@ -17,11 +22,6 @@ Jewelery Store robbery script for QBCore
 All store locations are in the config, change these to your own MLO's or use GigZ Jewelers, link below:
 
 - [Stores](https://forum.cfx.re/t/mlo-jewel-store-by-gigz/4857261/24)
-
-## Credits
-- Holiday95 for the original fork
-- FjamZoo for the thermite animations
-- QBCore Framework and Developers for original qb-jewelery
 
 ## Support
 I'll happily provide any help I can, preferably join my discord and ask for support. If enough people show interest, I'll create a dedicated support channel with tickets. 
