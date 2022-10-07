@@ -12,16 +12,17 @@ Don's Jewelery Store robbery script for QBCore
 - [okokNotify](https://okok.tebex.io/package/4724993)
 
 ## Features
-- 3 New Locations // City, Grapeseed & Paleto
+- 2 New Locations // Grapeseed & Paleto
 - Doors auto lock after 6pm at night and unlock at 6am
 - Can't hit store during the day... (Good place to put your mining jewels buyer ped!)
 - Thermite hack to open unlock doors at night
+- Lockpick into the second room at the city Vangelico's and hack the PC to unlock all the stores for 5 minutes
 
 ## Store Locations
 
-All store locations are in the config, change these to your own MLO's or use GigZ Jewelers, link below:
+All store locations are for GigZ Jewelers' except for the base GTA one. It's a free map, link below:
 
-- [Stores](https://forum.cfx.re/t/mlo-jewel-store-by-gigz/4857261/24)
+- [GigZ Jewelers](https://forum.cfx.re/t/mlo-jewel-store-by-gigz/4857261/24)
 
 ## Support
 I'll happily provide any help I can, preferably join my discord and ask for support. If enough people show interest, I'll create a dedicated support channel with tickets. 
