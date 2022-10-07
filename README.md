@@ -32,9 +32,9 @@ CreateThread(function()
     local loopDone = false 
     while true do
         Wait(1000)
-        if GetClockHours() >= 18 or GetClockHours() <= 6 then -- Hours are in 24 hour time so 18 is 6pm
-            if not doorsLocked then
-                if not StoreHit then
+        if GetClockHours() >= 18 or GetClockHours() <= 6 then -- Hours are in 24 hour time, so between 6pm and 6am the doors are locked
+            if not doorsLocked then -- Checks if the doors are already locked
+                if not StoreHit then -- Checks if the stores been robbed ato allow the cooldown to actually work
                     Wait(1000)
                     LockAll()
                     loopDone = false
@@ -42,8 +42,8 @@ CreateThread(function()
             else
                 Wait(5000)
             end
-        elseif GetClockHours() >= 6 and GetClockHours() <= 18 then 
-            if not loopDone then 
+        elseif GetClockHours() >= 6 and GetClockHours() <= 18 then -- And between 6am and 6pm the doors are locked
+            if not loopDone then
                 Wait(1000)
                 UnlockAll()
                 loopDone = true
