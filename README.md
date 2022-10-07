@@ -20,6 +20,7 @@ Don's Jewelery Store robbery script for QBCore
 
 ## To Do
 - Place qb-jewelery/doors/Jewelery Stores.lua in qb-doorlock/configs
+- After downloading gigz_jewel_free (Heist Version New) you need to replace the fxmanisfest with the one I provide inside the storefix folder and place interiorproxies.meta inside the same folder.
 
 ## Why Autolock?
 In almost all the QBCore roleplay servers I've played on, have used some cool jewelery robbery scripts but every one that involves a thermite hack for the doors leaves the unlocking of the doors to the city police's discretion. Why can't I enter the store during the day and sell some of this rare mining gems I have? Well miners and esteemed "Jewelers" fret no more! You can sell during the day, from 6am to 6pm.
