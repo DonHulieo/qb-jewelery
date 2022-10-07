@@ -12,11 +12,16 @@ Don's Jewelery Store robbery script for QBCore
 - [okokNotify](https://okok.tebex.io/package/4724993)
 
 ## Features
-- 2 New Locations // Grapeseed & Paleto
-- Doors auto lock after 6pm at night and unlock at 6am
+- 3 Jewelery Store Locations // City, Grapeseed & Paleto
+- Doors auto lock after 6pm at night and unlock at 6am.
 - Can't hit store during the day... (Good place to put your mining jewels buyer ped!)
-- Thermite hack to open unlock doors at night
-- Lockpick into the second room at the city Vangelico's and hack the PC to unlock all the stores for 5 minutes
+- Thermite hack to open unlock doors at night.
+- Lockpick into the second room at the city Vangelico's and then hack the PC to unlock all the stores for 5 minutes.
+
+## To Do
+- Create item for hacking (currently just checks if your holding a phone).
+- Update animation for hacking.
+- Add police calls.
 
 ## Store Locations
 
