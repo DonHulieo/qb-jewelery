@@ -8,8 +8,8 @@ Don's Jewelery Store robbery script for QBCore
 
 ## Dependencies
 - [qb-core](https://github.com/qbcore-framework/qb-core)
+- [qb-doorlock](https://github.com/qbcore-framework/qb-doorlock)
 - [ps-ui](https://github.com/Project-Sloth/ps-ui)
-- [okokNotify](https://okok.tebex.io/package/4724993)
 
 ## Features
 - 3 Jewelery Store Locations // City, Grapeseed & Paleto
@@ -17,6 +17,8 @@ Don's Jewelery Store robbery script for QBCore
 - Can't hit store during the day... (Good place to put your mining jewels buyer ped!)
 - Thermite hack to open unlock doors at night.
 - Lockpick into the second room at the city Vangelico's and then hack the PC to unlock all the stores for 5 minutes.
+- Config option for just the city Vangelico's or all 3.
+- Config option for okokNotify or QBCore Notify.
 
 ## To Do
 - Place qb-jewelery/doors/Jewelery Stores.lua in qb-doorlock/configs
