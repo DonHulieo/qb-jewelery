@@ -1,8 +1,10 @@
+name "Don-Jewelery"
+author "DonHulieo"
+version "v0.0.9"
+description "Don\'s reworked jewelery heist for QBCore"
+
 fx_version 'cerulean'
 game 'gta5'
-
-description 'Don\'s reworked jewelery heist for QBCore'
-version '0.0.9'
 
 shared_scripts {
     '@qb-core/shared/locale.lua',
