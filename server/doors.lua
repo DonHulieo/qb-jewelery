@@ -1,12 +1,5 @@
 local QBCore = exports['qb-core']:GetCoreObject()
 
-RegisterServerEvent('qb-jewelery:client:Door', function()
-    local jewellery = exports.ox_doorlock:getDoorFromName('jewellery')
-
-    TriggerEvent('ox_doorlock:setState', jewellery.id, 0)
-    
-end)
-
 --[[RegisterNetEvent('qb-jewelery:server:RemoveDoorItem', function()
     local src = source
 	local Player = QBCore.Functions.GetPlayer(src)

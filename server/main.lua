@@ -32,14 +32,22 @@ RegisterNetEvent('qb-jewellery:server:vitrineReward', function()
         if Player.Functions.AddItem(Config.VitrineRewards[item]["item"], amount) then
             TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items[Config.VitrineRewards[item]["item"]], 'add')
         else
-            TriggerClientEvent('QBCore:Notify', src, Lang:t('error.to_much'), 'error')
+            if Config.Notify == "ok" then
+                TriggerClientEvent('okokNotify:Alert', source, "Oh Shit..", "I can't fit that in my pockets..", 3500, 'error')
+            elseif Config.Notify == "qb" then
+                TriggerClientEvent('QBCore:Notify', src, Lang:t('error.to_much'), 'error')
+            end
         end
     else
         local amount = math.random(2, 4)
         if Player.Functions.AddItem("10kgoldchain", amount) then
             TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items["10kgoldchain"], 'add')
         else
-            TriggerClientEvent('QBCore:Notify', src, Lang:t('error.to_much'), 'error')
+            if Config.Notify == "ok" then
+                TriggerClientEvent('okokNotify:Alert', source, "Oh Shit..", "I can't fit that in my pockets..", 3500, 'error')
+            elseif Config.Notify == "qb" then
+                TriggerClientEvent('QBCore:Notify', src, Lang:t('error.to_much'), 'error')
+            end
         end
     end
 end)
