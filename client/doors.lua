@@ -158,49 +158,63 @@ end
 
 RegisterNetEvent('qb-jewelery:client:ElectricBox', function()
 
-    
-    -- QBCore.Functions.Notify("Door Hacked! Should be opening soon..", 'success')
-
-    if Config.Doorlock == "ox" then
-        exports['okokNotify']:Alert("That's It!", "The doors hacked, it should be opening soon..", 5000, 'criminal')
-        TriggerServerEvent('qb-jewelery:client:Door')
-    elseif Config.Doorlock == "qb" then 
-        if StoreHit == "city" then
-            exports['okokNotify']:Alert("That's It!", "The fuses are blown, the doors should open soon..", 5000, 'criminal')
-            UnlockCity()
-            Wait(Config.Cooldown)
-            if GetClockHours() >= 18 or GetClockHours() <= 6 then
-                LockCity()
-            end
-            StoreHit = nil
-        elseif StoreHit == "grape" then
-            exports['okokNotify']:Alert("That's It!", "The fuses are blown, the doors should open soon..", 5000, 'criminal')
-            UnlockGrape()
-            Wait(Config.Cooldown)
-            if GetClockHours() >= 18 or GetClockHours() <= 6 then
-                LockGrape()
-            end
-            StoreHit = nil
-        elseif StoreHit == "pal" then
-            exports['okokNotify']:Alert("That's It!", "The fuses are blown, the doors should open soon..", 5000, 'criminal')
-            UnlockPal()
-            Wait(Config.Cooldown)
-            if GetClockHours() >= 18 or GetClockHours() <= 6 then
-                LockPal()
-            end
-            StoreHit = nil
-        elseif StoreHit == "all" then
-            exports['okokNotify']:Alert("Well Well Well", "Looks like that unlocked all the Vangelico dorrs across the city..", 5000, 'criminal')
-            UnlockAll()
-            Wait(Config.Cooldown)
-            if GetClockHours() >= 18 or GetClockHours() <= 6 then
-                LockAll()
-            end
-            StoreHit = nil
+    if StoreHit == "city" then
+        if Config.Notify == "ok" then
+            exports['okokNotify']:Alert("That's It!", "The fuses are blown, the doors should open soon..", 5000, 'success')
+        elseif Config.Notify == "qb" then
+            QBCore.Functions.Notify("Fuses blown! Should be opening soon..", 'success')
+        else
+            print('Notifications aren\'t configured, please set this. i.e Config.Notify = "qb"')
         end
+        UnlockCity()
+        Wait(Config.Cooldown)
+        if GetClockHours() >= 18 or GetClockHours() <= 6 then
+            LockCity()
+        end
+        StoreHit = nil
+    elseif StoreHit == "grape" then
+        if Config.Notify == "ok" then
+            exports['okokNotify']:Alert("That's It!", "The fuses are blown, the doors should open soon..", 5000, 'success')
+        elseif Config.Notify == "qb" then
+            QBCore.Functions.Notify("Fuses blown! Should be opening soon..", 'success')
+        else
+            print('Notifications aren\'t configured, please set this. i.e Config.Notify = "qb"')
+        end
+        UnlockGrape()
+        Wait(Config.Cooldown)
+        if GetClockHours() >= 18 or GetClockHours() <= 6 then
+            LockGrape()
+        end
+        StoreHit = nil
+    elseif StoreHit == "pal" then
+        if Config.Notify == "ok" then
+            exports['okokNotify']:Alert("That's It!", "The fuses are blown, the doors should open soon..", 5000, 'success')
+        elseif Config.Notify == "qb" then
+            QBCore.Functions.Notify("Fuses blown! Should be opening soon..", 'success')
+        else
+            print('Notifications aren\'t configured, please set this. i.e Config.Notify = "qb"')
+        end
+        UnlockPal()
+        Wait(Config.Cooldown)
+        if GetClockHours() >= 18 or GetClockHours() <= 6 then
+            LockPal()
+        end
+        StoreHit = nil
+    elseif StoreHit == "all" then
+        if Config.Notify == "ok" then
+            exports['okokNotify']:Alert("Well Well Well", "Looks like that unlocked all the Vangelico dorrs across the city..", 5000, 'success')
+        elseif Config.Notify == "qb" then
+            QBCore.Functions.Notify("Did I just unlock all the doors?", 'success')
+        else
+            print('Notifications aren\'t configured, please set this. i.e Config.Notify = "qb"')
+        end
+        UnlockAll()
+        Wait(Config.Cooldown)
+        if GetClockHours() >= 18 or GetClockHours() <= 6 then
+            LockAll()
+        end
+        StoreHit = nil
     end
-
-
 
     -- Police Call / Needs Configuring
 
@@ -242,14 +256,22 @@ RegisterNetEvent('qb-jewelery:client:thermitecity', function()
                                     TriggerServerEvent("evidence:server:CreateFingerDrop", coords)
                                 elseif math.random(1, 100) <= 5 and IsWearingHandshoes() then
                                     TriggerServerEvent("evidence:server:CreateFingerDrop", coords)
-                                    exports['okokNotify']:Alert("FUCK!", Lang:t('error.fingerprints'), 3500, 'criminal')
-                                    -- QBCore.Functions.Notify(Lang:t('error.fingerprints'), "error")
+                                    if Config.Notify == "ok" then
+                                        exports['okokNotify']:Alert("FUCK!", Lang:t('error.fingerprints'), 3500, 'error')
+                                    elseif Config.Notify == "qb" then
+                                        QBCore.Functions.Notify(Lang:t('error.fingerprints'), "error")
+                                    else
+                                        print('Notifications aren\'t configured, please set this. i.e Config.Notify = "qb"')
+                                    end
                                 end
                                 SetEntityHeading(ped, Config.Jewelery['city'][k]['coords'].w)
                                 exports['ps-ui']:Thermite(function(success) -- success
-                                    if success then    
-                                        exports['okokNotify']:Alert("Just Put This Here..", "Should I be wearing protection?", 3500, 'criminal')
-                                        -- QBCore.Functions.Notify("Placing Charge...", 'success', 4500)
+                                    if success then
+                                        if Config.Notify == "ok" then     
+                                            exports['okokNotify']:Alert("Just Put This Here..", "Should I be wearing protection?", 3500, 'success')
+                                        elseif Config.Notify == "qb" then
+                                            QBCore.Functions.Notify("Placing Charge...", 'success', 4500)
+                                        end
                                         local loc = Config.Jewelery['city'][k]['anim']
                                         local rotx, roty, rotz = table.unpack(vec3(GetEntityRotation(ped)))
                                         local bagscene = NetworkCreateSynchronisedScene(loc.x, loc.y, loc.z, rotx, roty, rotz, 2, false, false, 1065353216, 0, 1.3)
@@ -290,26 +312,43 @@ RegisterNetEvent('qb-jewelery:client:thermitecity', function()
                                         DeleteObject(thermal_charge)
                                         TriggerEvent('qb-jewelery:client:ElectricBox')
                                     else
-                                        exports['okokNotify']:Alert("Oh Shit!", "I'll have to try that again..", 4500, 'error')
-                                        -- QBCore.Functions.Notify("You Failure!", 'error', 4500)
+                                        if Config.Notify ==  "ok" then
+                                            exports['okokNotify']:Alert("Oh Shit!", "I'll have to try that again..", 4500, 'error')
+                                        elseif Config.Notify == "qb" then
+                                            QBCore.Functions.Notify("You Failure!", 'error', 4500)
+                                        end
                                         StoreHit = nil
                                     end
                                 end, Config.ThermiteSettings.time, Config.ThermiteSettings.gridsize, Config.ThermiteSettings.incorrectBlocks)
                             else
-                                exports['okokNotify']:Alert("Oh Damn..", "I should come back and try something else..", 5000, 'criminal')
-                                -- QBCore.Functions.Notify("You don't have the correct items!", 'error')
+                                if Config.Notify ==  "ok" then
+                                    exports['okokNotify']:Alert("Oh Damn..", "I should come back and try something else..", 5000, 'criminal')
+                                elseif Config.Notify == "qb" then
+                                    QBCore.Functions.Notify("You don't have the correct items!", 'error')
+                                end
                             end
                         end, "thermite")
                     else
-                        exports['okokNotify']:Alert("Oh Lol..", "I just can't quite reach..", 3500, 'error')
+                        if Config.Notify ==  "ok" then
+                            exports['okokNotify']:Alert("Oh Lol..", "I just can't quite reach..", 3500, 'error')
+                        elseif Config.Notify == "qb" then
+                            QBCore.Functions.Notify("Too far away!", 'error', 3500)
+                        end
                     end
                 end
             else
-                exports['okokNotify']:Alert("Hmmm..", "Something doesn't seem to right..", 5000, 'criminal')
-                -- QBCore.Functions.Notify("Something doesn't seem to be right..", 'error', 5000)
+                if Config.Notify ==  "ok" then
+                    exports['okokNotify']:Alert("Hmmm..", "Something doesn't seem to right..", 5000, 'error')
+                elseif Config.Notify == "qb" then
+                    QBCore.Functions.Notify("Something doesn't seem to be right..", 'error', 5000)
+                end
             end
         else
-            exports['okokNotify']:Alert("Oh Shit..", "I should come back and try this at night...", 5000, 'criminal')
+            if Config.Notify ==  "ok" then
+                exports['okokNotify']:Alert("Oh Shit..", "I should come back and try this at night...", 4500, 'error')
+            elseif Config.Notify == "qb" then
+                QBCore.Functions.Notify("I should come back and try this at night...", 'error', 4500)
+            end
         end
     end)
 end)
@@ -329,14 +368,22 @@ RegisterNetEvent('qb-jewelery:client:thermitegrape', function()
                                     TriggerServerEvent("evidence:server:CreateFingerDrop", coords)
                                 elseif math.random(1, 100) <= 5 and IsWearingHandshoes() then
                                     TriggerServerEvent("evidence:server:CreateFingerDrop", coords)
-                                    exports['okokNotify']:Alert("FUCK!", Lang:t('error.fingerprints'), 3500, 'criminal')
-                                    -- QBCore.Functions.Notify(Lang:t('error.fingerprints'), "error")
+                                    if Config.Notify == "ok" then
+                                        exports['okokNotify']:Alert("FUCK!", Lang:t('error.fingerprints'), 3500, 'error')
+                                    elseif Config.Notify == "qb" then
+                                        QBCore.Functions.Notify(Lang:t('error.fingerprints'), "error")
+                                    else
+                                        print('Notifications aren\'t configured, please set this. i.e Config.Notify = "qb"')
+                                    end
                                 end
                                 SetEntityHeading(ped, Config.Jewelery['grape'][k]['coords'].w)
                                 exports['ps-ui']:Thermite(function(success) -- success
                                     if success then 
-                                        exports['okokNotify']:Alert("Just Put This Here..", "Should I be wearing protection?", 3500, 'criminal')
-                                        -- QBCore.Functions.Notify("Placing Charge...", 'success', 4500)
+                                        if Config.Notify == "ok" then     
+                                            exports['okokNotify']:Alert("Just Put This Here..", "Should I be wearing protection?", 3500, 'success')
+                                        elseif Config.Notify == "qb" then
+                                            QBCore.Functions.Notify("Placing Charge...", 'success', 4500)
+                                        end
                                         local loc = Config.Jewelery['grape'][k]['anim']
                                         local rotx, roty, rotz = table.unpack(vec3(GetEntityRotation(ped)))
                                         local bagscene = NetworkCreateSynchronisedScene(loc.x, loc.y, loc.z, rotx, roty, rotz, 2, false, false, 1065353216, 0, 1.3)
@@ -378,26 +425,43 @@ RegisterNetEvent('qb-jewelery:client:thermitegrape', function()
                                         DeleteObject(thermal_charge)
                                         TriggerEvent('qb-jewelery:client:ElectricBox')
                                     else
-                                        exports['okokNotify']:Alert("Oh Shit!", "I'll have to try that again..", 4500, 'error')
-                                        -- QBCore.Functions.Notify("You Failure!", 'error', 4500)
+                                        if Config.Notify ==  "ok" then
+                                            exports['okokNotify']:Alert("Oh Shit!", "I'll have to try that again..", 4500, 'error')
+                                        elseif Config.Notify == "qb" then
+                                            QBCore.Functions.Notify("You Failure!", 'error', 4500)
+                                        end
                                         StoreHit = nil
                                     end
                                 end, Config.ThermiteSettings.time, Config.ThermiteSettings.gridsize, Config.ThermiteSettings.incorrectBlocks)
                             else
-                                exports['okokNotify']:Alert("Oh Damn..", "I should come back and try something else..", 5000, 'criminal')
-                                -- QBCore.Functions.Notify("You don't have the correct items!", 'error')
+                                if Config.Notify ==  "ok" then
+                                    exports['okokNotify']:Alert("Oh Damn..", "I should come back and try something else..", 5000, 'criminal')
+                                elseif Config.Notify == "qb" then
+                                    QBCore.Functions.Notify("You don't have the correct items!", 'error')
+                                end
                             end
                         end, "thermite")
                     else
-                        exports['okokNotify']:Alert("Oh Lol..", "I just can't quite reach..", 3500, 'error')
+                        if Config.Notify ==  "ok" then
+                            exports['okokNotify']:Alert("Oh Lol..", "I just can't quite reach..", 3500, 'error')
+                        elseif Config.Notify == "qb" then
+                            QBCore.Functions.Notify("Too far away!", 'error', 3500)
+                        end
                     end
                 end
             else
-                exports['okokNotify']:Alert("Hmmm..", "Something doesn't seem to right..", 5000, 'criminal')
-                -- QBCore.Functions.Notify("Something doesn't seem to be right..", 'error', 5000)
+                if Config.Notify ==  "ok" then
+                    exports['okokNotify']:Alert("Hmmm..", "Something doesn't seem to right..", 5000, 'error')
+                elseif Config.Notify == "qb" then
+                    QBCore.Functions.Notify("Something doesn't seem to be right..", 'error', 5000)
+                end
             end
         else
-            exports['okokNotify']:Alert("Oh Shit..", "I should come back and try this at night...", 5000, 'criminal')
+            if Config.Notify ==  "ok" then
+                exports['okokNotify']:Alert("Oh Shit..", "I should come back and try this at night...", 4500, 'error')
+            elseif Config.Notify == "qb" then
+                QBCore.Functions.Notify("I should come back and try this at night...", 'error', 4500)
+            end
         end
     end)
 end)
@@ -417,14 +481,22 @@ RegisterNetEvent('qb-jewelery:client:thermitepal', function()
                                     TriggerServerEvent("evidence:server:CreateFingerDrop", coords)
                                 elseif math.random(1, 100) <= 5 and IsWearingHandshoes() then
                                     TriggerServerEvent("evidence:server:CreateFingerDrop", coords)
-                                    exports['okokNotify']:Alert("FUCK!", Lang:t('error.fingerprints'), 3500, 'criminal')
-                                    -- QBCore.Functions.Notify(Lang:t('error.fingerprints'), "error")
+                                    if Config.Notify == "ok" then
+                                        exports['okokNotify']:Alert("FUCK!", Lang:t('error.fingerprints'), 3500, 'error')
+                                    elseif Config.Notify == "qb" then
+                                        QBCore.Functions.Notify(Lang:t('error.fingerprints'), "error")
+                                    else
+                                        print('Notifications aren\'t configured, please set this. i.e Config.Notify = "qb"')
+                                    end
                                 end
                                 SetEntityHeading(ped, Config.Jewelery['pal'][k]['coords'].w)
                                 exports['ps-ui']:Thermite(function(success)
                                     if success then
-                                        exports['okokNotify']:Alert("Just Put This Here..", "Should I be wearing protection?", 3500, 'criminal')
-                                        -- QBCore.Functions.Notify("Placing Charge...", 'success', 4500)
+                                        if Config.Notify == "ok" then     
+                                            exports['okokNotify']:Alert("Just Put This Here..", "Should I be wearing protection?", 3500, 'success')
+                                        elseif Config.Notify == "qb" then
+                                            QBCore.Functions.Notify("Placing Charge...", 'success', 4500)
+                                        end
                                         local loc = Config.Jewelery['pal'][k]['anim']
                                         local rotx, roty, rotz = table.unpack(vec3(GetEntityRotation(ped)))
                                         local bagscene = NetworkCreateSynchronisedScene(loc.x, loc.y, loc.z, rotx, roty, rotz, 2, false, false, 1065353216, 0, 1.3)
@@ -466,26 +538,43 @@ RegisterNetEvent('qb-jewelery:client:thermitepal', function()
                                         DeleteObject(thermal_charge)
                                         TriggerEvent('qb-jewelery:client:ElectricBox')
                                     else
-                                        exports['okokNotify']:Alert("Oh Shit!", "I'll have to try that again..", 4500, 'error')
-                                        -- QBCore.Functions.Notify("You Failure!", 'error', 4500)
+                                        if Config.Notify ==  "ok" then
+                                            exports['okokNotify']:Alert("Oh Shit!", "I'll have to try that again..", 4500, 'error')
+                                        elseif Config.Notify == "qb" then
+                                            QBCore.Functions.Notify("You Failure!", 'error', 4500)
+                                        end
                                         StoreHit = nil
                                     end
                                 end, Config.ThermiteSettings.time, Config.ThermiteSettings.gridsize, Config.ThermiteSettings.incorrectBlocks)
                             else
-                                exports['okokNotify']:Alert("Oh Damn..", "I should come back and try something else..", 5000, 'criminal')
-                                -- QBCore.Functions.Notify("You don't have the correct items!", 'error')
+                                if Config.Notify ==  "ok" then
+                                    exports['okokNotify']:Alert("Oh Damn..", "I should come back and try something else..", 5000, 'criminal')
+                                elseif Config.Notify == "qb" then
+                                    QBCore.Functions.Notify("You don't have the correct items!", 'error')
+                                end
                             end
                         end, "thermite")
                     else
-                        exports['okokNotify']:Alert("Oh Lol..", "I just can't quite reach..", 3500, 'error')
+                        if Config.Notify ==  "ok" then
+                            exports['okokNotify']:Alert("Oh Lol..", "I just can't quite reach..", 3500, 'error')
+                        elseif Config.Notify == "qb" then
+                            QBCore.Functions.Notify("Too far away!", 'error', 3500)
+                        end
                     end
                 end
             else
-                exports['okokNotify']:Alert("Hmmm..", "Something doesn't seem to right..", 5000, 'criminal')
-                -- QBCore.Functions.Notify("Something doesn't seem to be right..", 'error', 5000)
+                if Config.Notify ==  "ok" then
+                    exports['okokNotify']:Alert("Hmmm..", "Something doesn't seem to right..", 5000, 'error')
+                elseif Config.Notify == "qb" then
+                    QBCore.Functions.Notify("Something doesn't seem to be right..", 'error', 5000)
+                end
             end
         else
-            exports['okokNotify']:Alert("Oh Shit..", "I should come back and try this at night...", 5000, 'criminal')
+            if Config.Notify ==  "ok" then
+                exports['okokNotify']:Alert("Oh Shit..", "I should come back and try this at night...", 4500, 'error')
+            elseif Config.Notify == "qb" then
+                QBCore.Functions.Notify("I should come back and try this at night...", 'error', 4500)
+            end
         end
     end)
 end)
@@ -501,16 +590,28 @@ RegisterNetEvent('qb-jewelery:client:pchack', function()
                     if Dist <= 1.5 then
                         QBCore.Functions.TriggerCallback('qb-jewelery:server:GetItemsNeeded', function(hasItem)
                             if hasItem then
-                                exports['okokNotify']:Alert("What's This?", "I wonder what I'll find on here..?", 3500, 'criminal')
+                                if Config.Notify == "ok" then     
+                                    exports['okokNotify']:Alert("What's This?", "I wonder what I'll find on here..?", 3500, 'info')
+                                elseif Config.Notify == "qb" then
+                                    QBCore.Functions.Notify("What's this?", 'success', 3500)
+                                end
                                 startAnim()
                                 --[[if math.random(1, 100) <= 80 and not IsWearingHandshoes() then
                                     TriggerServerEvent("evidence:server:CreateFingerDrop", targetPosition)
                                 elseif math.random(1, 100) <= 5 and IsWearingHandshoes() then
                                     TriggerServerEvent("evidence:server:CreateFingerDrop", targetPosition)
-                                    exports['okokNotify']:Alert("FUCK!", Lang:t('error.fingerprints'), 3500, 'criminal')
+                                    if Config.Notify == "ok" then     
+                                        exports['okokNotify']:Alert("Just Put This Here..", "Should I be wearing protection?", 3500, 'success')
+                                    elseif Config.Notify == "qb" then
+                                        QBCore.Functions.Notify("Placing Charge...", 'success', 4500)
+                                    end
                                 end]]
                                 Wait(500)
-                                exports['okokNotify']:Alert("@^^%$#", "connecting to security system...", 3500, 'criminal')
+                                if Config.Notify == "ok" then     
+                                    exports['okokNotify']:Alert("@^^%$#", "connecting to security system...", 3500, 'success')
+                                elseif Config.Notify == "qb" then
+                                    QBCore.Functions.Notify("connecting to security system...", 'success', 3500)
+                                end
                                 Wait(2000)
                                 exports['ps-ui']:VarHack(function(success)
                                     if success then
@@ -518,7 +619,11 @@ RegisterNetEvent('qb-jewelery:client:pchack', function()
                                         StoreHit = "all"
                                         TriggerEvent('qb-jewelery:client:ElectricBox')
                                     else
-                                        exports['okokNotify']:Alert("Oh Shit!", "I'll have to try that again..", 4500, 'error')
+                                        if Config.Notify == "ok" then     
+                                            exports['okokNotify']:Alert("Oh Shit!", "I'll have to try that again..", 4500, 'error')
+                                        elseif Config.Notify == "qb" then
+                                            QBCore.Functions.Notify("I'll have to try that again..", 'error', 3500)
+                                        end
                                         stopAnim()
                                         FreezeEntityPosition(ped, false)
                                         StoreHit = nil
@@ -551,7 +656,11 @@ CreateThread(function()
             if not doorsLocked then
                 if not StoreHit then
                     Wait(1000)
-                    LockAll()
+                    if Config.Stores == "city" then
+                        LockCity()
+                    else
+                        LockAll()
+                    end
                     loopDone = false
                 end
             else
@@ -560,7 +669,11 @@ CreateThread(function()
         elseif GetClockHours() >= 6 and GetClockHours() <= 18 then
             if not loopDone then
                 Wait(1000)
-                UnlockAll()
+                if Config.Stores == "city" then
+                    UnlockCity()
+                else
+                    UnlockAll()
+                end
                 loopDone = true
             else
                 Wait(5000)

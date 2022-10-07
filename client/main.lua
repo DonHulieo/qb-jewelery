@@ -22,11 +22,9 @@ local function loadAnimDict(dict)
 end
 
 local function createBlips()
-    if pedSpawned then return end
-
-    for dealer in pairs(Config.JewelleryLocation) do
+    if Config.Stores == "city" then
         if Config.ShowBlips then
-            local Dealer = AddBlipForCoord(Config.JewelleryLocation[dealer]["coords"]["x"], Config.JewelleryLocation[dealer]["coords"]["y"], Config.JewelleryLocation[dealer]["coords"]["z"])
+            local Dealer = AddBlipForCoord(Config.JewelleryLocation["cityvangelico"]["coords"]["x"], Config.JewelleryLocation["cityvangelico"]["coords"]["y"], Config.JewelleryLocation["cityvangelico"]["coords"]["z"])
             SetBlipSprite (Dealer, 617)
             SetBlipDisplay(Dealer, 4)
             SetBlipScale  (Dealer, 0.4)
@@ -35,6 +33,20 @@ local function createBlips()
             BeginTextCommandSetBlipName("STRING")
             AddTextComponentSubstringPlayerName("Vangelico Jewellery")
             EndTextCommandSetBlipName(Dealer)
+        end
+    else
+        for dealer in pairs(Config.JewelleryLocation) do
+            if Config.ShowBlips then
+                local Dealer = AddBlipForCoord(Config.JewelleryLocation[dealer]["coords"]["x"], Config.JewelleryLocation[dealer]["coords"]["y"], Config.JewelleryLocation[dealer]["coords"]["z"])
+                SetBlipSprite (Dealer, 617)
+                SetBlipDisplay(Dealer, 4)
+                SetBlipScale  (Dealer, 0.4)
+                SetBlipAsShortRange(Dealer, true)
+                SetBlipColour(Dealer, 3)
+                BeginTextCommandSetBlipName("STRING")
+                AddTextComponentSubstringPlayerName("Vangelico Jewellery")
+                EndTextCommandSetBlipName(Dealer)
+            end
         end
     end
 end
@@ -85,8 +97,11 @@ local function smashVitrine(k)
                     TriggerServerEvent("evidence:server:CreateFingerDrop", plyCoords)
                 elseif math.random(1, 100) <= 5 and IsWearingHandshoes() then
                     TriggerServerEvent("evidence:server:CreateFingerDrop", plyCoords)
-                    exports['okokNotify']:Alert("FUCK!", Lang:t('error.fingerprints'), 3500, 'criminal')
-                    -- QBCore.Functions.Notify(Lang:t('error.fingerprints'), "error")
+                    if Config.Notify == "ok" then
+                        exports['okokNotify']:Alert("FUCK!", Lang:t('error.fingerprints'), 3500, 'error')
+                    elseif Config.Notify == "qb" then
+                        QBCore.Functions.Notify(Lang:t('error.fingerprints'), "error")
+                    end
                 end
                 smashing = true
                 QBCore.Functions.Progressbar("smash_vitrine", Lang:t('info.progressbar'), Config.WhitelistedWeapons[pedWeapon]["timeOut"], false, true, {
@@ -121,11 +136,19 @@ local function smashVitrine(k)
                     end
                 end)
             else
-                exports['okokNotify']:Alert("Oh C'mon!", Lang:t('error.minimum_police'), 5000, 'criminal')
-                -- QBCore.Functions.Notify(Lang:t('error.minimum_police', {value = Config.RequiredCops}), 'error')
+                if Config.Notify == "ok" then
+                    exports['okokNotify']:Alert("Oh C'mon!", Lang:t('error.minimum_police'), 5000, 'error')
+                elseif Config.Notify == "qb" then
+                    QBCore.Functions.Notify(Lang:t('error.minimum_police', {value = Config.RequiredCops}), 'error')
+                end
             end
         elseif GetClockHours() >= 6 and GetClockHours() <= 18 then
-            exports['okokNotify']:Alert("Oh Shit..", "I should come back and try this at night...", 5000, 'criminal')
+            if Config.Notify == "ok" then
+                exports['okokNotify']:Alert("Oh Shit..", "I should come back and try this at night...", 5000, 'info')
+            elseif Config.Notify == "qb" then
+                QBCore.Functions.Notify(Lang:t('I should try this at night..', 'error')
+            end
+            
         end
     end)
 end
@@ -174,8 +197,11 @@ local function Listen4Control(case)
                         if validWeapon() then
                             smashVitrine(case)
                         else
-                            exports['okokNotify']:Alert("Oh C'mon!", Lang:t('error.wrong_weapon'), 5000, 'error')
-                            -- QBCore.Functions.Notify(Lang:t('error.wrong_weapon'), 'error')
+                            if Config.Notify == "ok" then
+                                exports['okokNotify']:Alert("Oh C'mon!", Lang:t('error.wrong_weapon'), 5000, 'error')
+                            elseif Config.Notify == "qb" then
+                                QBCore.Functions.Notify(Lang:t('error.wrong_weapon'), 'error')
+                            end
                         end
                     else
                         exports['qb-core']:DrawText(Lang:t('general.drawtextui_broken'), 'left')
