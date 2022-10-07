@@ -146,9 +146,8 @@ local function smashVitrine(k)
             if Config.Notify == "ok" then
                 exports['okokNotify']:Alert("Oh Shit..", "I should come back and try this at night...", 5000, 'info')
             elseif Config.Notify == "qb" then
-                QBCore.Functions.Notify(Lang:t('I should try this at night..', 'error')
-            end
-            
+                QBCore.Functions.Notify(Lang:t('I should try this at night..'), 'error')
+            end 
         end
     end)
 end
