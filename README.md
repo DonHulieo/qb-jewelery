@@ -19,6 +19,9 @@ Don's Jewelery Store robbery script for QBCore
 - Lockpick into the second room at the city Vangelico's and then hack the PC to unlock all the stores for 5 minutes.
 
 ## To Do
+- Place qb-jewelery/doors/Jewelery Stores.lua in qb-doorlock/configs
+
+## Plans
 - Create item for hacking (currently just checks if your holding a phone).
 - Update animation for hacking.
 - Add police calls.
