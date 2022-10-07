@@ -20,6 +20,11 @@ Don's Jewelery Store robbery script for QBCore
 - Config option for just the city Vangelico's or all 3.
 - Config option for okokNotify or QBCore Notify.
 
+## Plans
+- Create item for hacking (currently just checks if your holding a phone, jl-laptop maybe?).
+- Update animation for hacking.
+- Add police calls.
+
 ## To Do
 - Place qb-jewelery/doors/Jewelery Stores.lua in qb-doorlock/configs
 - After downloading gigz_jewel_free (Heist Version New) you need to replace the fxmanisfest with the one I provide inside the storefix folder and place interiorproxies.meta inside the same folder.
@@ -89,11 +94,6 @@ local function LockCity() -- Locks Los Santos Vangelico's
     CityLocked = true
 end
 ```
-
-## Plans
-- Create item for hacking (currently just checks if your holding a phone, jl-laptop maybe?).
-- Update animation for hacking.
-- Add police calls.
 
 ## Store Locations
 
