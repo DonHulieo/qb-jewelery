@@ -114,6 +114,30 @@ local function UnlockAll() -- Unlocks all stores and returns variable to stop th
     end
 end
 
+local function startAnim()
+    CreateThread(function()
+        local ped = PlayerPedId()
+        RequestAnimDict("amb@world_human_seat_wall_tablet@female@base")
+        while not HasAnimDictLoaded("amb@world_human_seat_wall_tablet@female@base") do
+            Citizen.Wait(0)
+        end
+        attachObject()
+        TaskPlayAnim(ped, "amb@world_human_seat_wall_tablet@female@base", "base" ,8.0, -8.0, -1, 50, 0, false, false, false)
+    end)
+end
+
+local function attachObject()
+    local ped = PlayerPedId()
+    tab = CreateObject(GetHashKey("prop_cs_tablet"), 0, 0, 0, true, true, true)
+    AttachEntityToEntity(tab, ped, GetPedBoneIndex(ped, 57005), 0.17, 0.10, -0.13, 20.0, 180.0, 180.0, true, true, false, true, 1, true)
+end
+
+local function stopAnim()
+    local ped = PlayerPedId()
+    StopAnimTask(ped, "amb@world_human_seat_wall_tablet@female@base", "base" ,8.0, -8.0, -1, 50, 0, false, false, false)
+    DeleteEntity(tab)
+end
+
 local function IsWearingHandshoes() -- Glove check
     local armIndex = GetPedDrawableVariation(PlayerPedId(), 3)
     local model = GetEntityModel(PlayerPedId())
@@ -478,60 +502,24 @@ RegisterNetEvent('qb-jewelery:client:pchack', function()
                         QBCore.Functions.TriggerCallback('qb-jewelery:server:GetItemsNeeded', function(hasItem)
                             if hasItem then
                                 exports['okokNotify']:Alert("What's This?", "I wonder what I'll find on here..?", 3500, 'criminal')
-                                local loc = Config.Jewelery['pc'][k]['anim']
-                                local animDict = "anim@heists@ornate_bank@hack"
-                                RequestAnimDict(animDict)
-                                RequestModel("hei_prop_hst_laptop")
-                                RequestModel("hei_p_m_bag_var22_arm_s")
-                                while not HasAnimDictLoaded(animDict) or not HasModelLoaded("hei_prop_hst_laptop") or not HasModelLoaded("hei_p_m_bag_var22_arm_s") do Wait(10) end
-                                local targetPosition, targetRotation = (vec3(GetEntityCoords(ped))), vec3(GetEntityRotation(ped))
-                                if math.random(1, 100) <= 80 and not IsWearingHandshoes() then
+                                startAnim()
+                                --[[if math.random(1, 100) <= 80 and not IsWearingHandshoes() then
                                     TriggerServerEvent("evidence:server:CreateFingerDrop", targetPosition)
                                 elseif math.random(1, 100) <= 5 and IsWearingHandshoes() then
                                     TriggerServerEvent("evidence:server:CreateFingerDrop", targetPosition)
                                     exports['okokNotify']:Alert("FUCK!", Lang:t('error.fingerprints'), 3500, 'criminal')
-                                end
-                                SetEntityHeading(ped, loc.h)
-                                local animPos = GetAnimInitialOffsetPosition(animDict, "hack_enter", loc.x, loc.y, loc.z, loc.x, loc.y, loc.z, 0, 2)
-                                local animPos2 = GetAnimInitialOffsetPosition(animDict, "hack_loop", loc.x, loc.y, loc.z, loc.x, loc.y, loc.z, 0, 2)
-                                local animPos3 = GetAnimInitialOffsetPosition(animDict, "hack_exit", loc.x, loc.y, loc.z, loc.x, loc.y, loc.z, 0, 2)
-                                FreezeEntityPosition(ped, true)
-                                local netScene = NetworkCreateSynchronisedScene(animPos, targetRotation, 2, false, false, 1065353216, 0, 1.3)
-                                local bag = CreateObject(`hei_p_m_bag_var22_arm_s`, targetPosition, 1, 1, 0)
-                                local laptop = CreateObject(`hei_prop_hst_laptop`, targetPosition, 1, 1, 0)
-                                NetworkAddPedToSynchronisedScene(ped, netScene, animDict, "hack_enter", 1.5, -4.0, 1, 16, 1148846080, 0)
-                                NetworkAddEntityToSynchronisedScene(bag, netScene, animDict, "hack_enter_bag", 4.0, -8.0, 1)
-                                NetworkAddEntityToSynchronisedScene(laptop, netScene, animDict, "hack_enter_laptop", 4.0, -8.0, 1)
-                                local netScene2 = NetworkCreateSynchronisedScene(animPos2, targetRotation, 2, false, true, 1065353216, 0, 1.3)
-                                NetworkAddPedToSynchronisedScene(ped, netScene2, animDict, "hack_loop", 1.5, -4.0, 1, 16, 1148846080, 0)
-                                NetworkAddEntityToSynchronisedScene(bag, netScene2, animDict, "hack_loop_bag", 4.0, -8.0, 1)
-                                NetworkAddEntityToSynchronisedScene(laptop, netScene2, animDict, "hack_loop_laptop", 4.0, -8.0, 1)
-                                local netScene3 = NetworkCreateSynchronisedScene(animPos3, targetRotation, 2, false, false, 1065353216, 0, 1.3)
-                                NetworkAddPedToSynchronisedScene(ped, netScene3, animDict, "hack_exit", 1.5, -4.0, 1, 16, 1148846080, 0)
-                                NetworkAddEntityToSynchronisedScene(bag, netScene3, animDict, "hack_exit_bag", 4.0, -8.0, 1)
-                                NetworkAddEntityToSynchronisedScene(laptop, netScene3, animDict, "hack_exit_laptop", 4.0, -8.0, 1)
-                                Wait(200)
-                                NetworkStartSynchronisedScene(netScene)
-                                Wait(6300)
-                                NetworkStartSynchronisedScene(netScene2)
+                                end]]
+                                Wait(500)
+                                exports['okokNotify']:Alert("@^^%$#", "connecting to security system...", 3500, 'criminal')
                                 Wait(2000)
                                 exports['ps-ui']:VarHack(function(success)
                                     if success then
-                                        NetworkStartSynchronisedScene(netScene3)
-                                        Wait(4600)
-                                        NetworkStopSynchronisedScene(netScene3)
-                                        DeleteObject(bag)
-                                        DeleteObject(laptop)
-                                        FreezeEntityPosition(ped, false)
+                                        stopAnim()
                                         StoreHit = "all"
                                         TriggerEvent('qb-jewelery:client:ElectricBox')
                                     else
                                         exports['okokNotify']:Alert("Oh Shit!", "I'll have to try that again..", 4500, 'error')
-                                        NetworkStartSynchronisedScene(netScene3)
-                                        Wait(4600)
-                                        NetworkStopSynchronisedScene(netScene3)
-                                        DeleteObject(bag)
-                                        DeleteObject(laptop)
+                                        stopAnim()
                                         FreezeEntityPosition(ped, false)
                                         StoreHit = nil
                                     end
