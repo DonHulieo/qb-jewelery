@@ -1,7 +1,7 @@
 fx_version 'cerulean'
 game 'gta5'
 
-description 'Don-Jewelery'
+description 'Don\'s reworked jewelery heist for QBCore'
 version '0.0.9'
 
 shared_scripts {

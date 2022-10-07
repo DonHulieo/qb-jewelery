@@ -4,7 +4,10 @@ Config = Config or {}
 -- These have to be a string thanks to how Convars are returned.
 Config.UseTarget = GetConvar('UseTarget', 'false') == 'true'
 
-Config.Doorlock = "qb" -- qb or ox
+Config.Notify = "qb" -- can be either "qb" for QBCore's base notification system or "ok" for okok's notifications system
+
+Config.Stores = "city" -- can either be nil for all 3 stores are just "city" for the 1
+
 Config.CityDoor = "jewelery-citymain" -- edit this ID to your city jewelery main store door ID
 Config.CitySec = "jewelery-citysec"
 Config.GrapeDoor = "jewelery-grapemain" -- edit this ID to your grapeseed jewelery main store door ID
