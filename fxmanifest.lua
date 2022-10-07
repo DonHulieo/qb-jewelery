@@ -1,11 +1,10 @@
 fx_version 'cerulean'
 game 'gta5'
 
-description 'QB-Jewelry'
-version '1.0.0'
+description 'Don-Jewelery'
+version '0.0.9'
 
 shared_scripts {
-    -- '@ox_lib/init.lua',
     '@qb-core/shared/locale.lua',
     'locale/en.lua', -- replace with desired language
     'config.lua'
