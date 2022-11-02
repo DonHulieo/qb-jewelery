@@ -1,7 +1,6 @@
 ## PLEASE NOTE
-Re-released as two seperate versions for;
-- [One Store Version - qb-jewelery](https://github.com/DonHulieo/qb-jewelery)
-- [Three Store Version - don-jewelery](https://github.com/DonHulieo/don-jewelery)
+Re-released
+- [don-jewelery](https://github.com/DonHulieo/don-jewelery)
 
 ## Credits
 - Holiday95 for the original fork
